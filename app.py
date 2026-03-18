@@ -1,11 +1,12 @@
+import os
 from flask import Flask, render_template, request, redirect
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
 
-# ✅ FIXED Mongo connection
-client = MongoClient("mongodb://host.docker.internal:27017/")
+mongo_uri = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+client = MongoClient(mongo_uri)
 db = client["tododb"]
 todos = db["todos"]
 
