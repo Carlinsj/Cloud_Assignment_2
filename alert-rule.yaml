@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: pod-down-alert
+  labels:
+    release: prometheus
+spec:
+  groups:
+  - name: pod-alerts
+    rules:
+    - alert: PodDown
+      expr: kube_pod_container_status_restarts_total > 0
+      for: 5s
+      labels:
+        severity: critical
+      annotations:
+        summary: "Pod Restarted"
+        description: "A pod has restarted"

@@ -1,0 +1,12 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: slack-notifications
+
+receivers:
+- name: slack-notifications
+  slack_configs:
+  - api_url: "https://hooks.slack.com/services/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"
+    channel: "#assignments"
+    send_resolved: true
