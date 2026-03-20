@@ -7,6 +7,6 @@ route:
 receivers:
 - name: slack-notifications
   slack_configs:
-  - api_url: "https://hooks.slack.com/services/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"
+  - api_url: "<Slack_Webhook_URL>"
     channel: "#assignments"
     send_resolved: true
