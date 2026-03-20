@@ -1,0 +1,11 @@
+.git
+.gitignore
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.log
+README.md
+Cloud Computing Assignment - 2.docx
+k8s/

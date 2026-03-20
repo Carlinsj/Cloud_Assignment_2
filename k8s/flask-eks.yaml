@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-todo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask-todo
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: flask-todo
+    spec:
+      containers:
+        - name: flask
+          image: as21153/flask-todo:v1
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MONGO_URI
+              value: mongodb://mongo:27017/tododb
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-todo-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: flask-todo
+  ports:
+    - port: 5000
+      targetPort: 5000
